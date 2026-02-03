@@ -1,11 +1,47 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, Sparkles } from "lucide-react";
+import { useRef } from "react";
 
 const Hero = () => {
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+  
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
+
+  // Character animation variants
+  const letterVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.03,
+        duration: 0.5,
+        ease: [0.25, 0.46, 0.45, 0.94] as const
+      }
+    })
+  };
+
+  const line1 = "Designing visuals &";
+  const line2 = "interfaces that feel";
+  const line3 = "clear, modern";
+  const line4 = "& human.";
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-hero overflow-hidden noise-overlay">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <section 
+      ref={containerRef}
+      className="relative min-h-screen flex items-center justify-center bg-gradient-hero overflow-hidden noise-overlay"
+    >
+      {/* Background decorative elements with parallax */}
+      <motion.div 
+        style={{ y }}
+        className="absolute inset-0 overflow-hidden pointer-events-none"
+      >
         {/* Electric blue glow */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -27,7 +63,7 @@ const Hero = () => {
           transition={{ duration: 2, delay: 0.6 }}
           className="absolute top-1/3 left-1/3 w-[300px] h-[300px] rounded-full bg-accent-purple blur-[100px]"
         />
-      </div>
+      </motion.div>
 
       {/* Grid pattern overlay */}
       <div className="absolute inset-0 opacity-[0.02]" style={{
@@ -36,7 +72,10 @@ const Hero = () => {
         backgroundSize: '60px 60px'
       }} />
 
-      <div className="container mx-auto px-6 lg:px-12 relative z-10">
+      <motion.div 
+        style={{ opacity, scale }}
+        className="container mx-auto px-6 lg:px-12 relative z-10"
+      >
         <div className="max-w-5xl mx-auto text-center">
           {/* Tagline */}
           <motion.div
@@ -51,27 +90,75 @@ const Hero = () => {
             </span>
           </motion.div>
           
-          {/* Main headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="font-display text-5xl md:text-7xl lg:text-8xl font-black leading-[0.95] mb-8 tracking-tight"
-          >
-            Designing visuals &
-            <br />
-            interfaces that feel
-            <br />
-            <span className="text-gradient">clear, modern</span>
-            <br />
-            <span className="text-gradient-green">& human.</span>
-          </motion.h1>
+          {/* Main headline with character animation */}
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-black leading-[0.95] mb-8 tracking-tight overflow-hidden">
+            <motion.span className="block">
+              {line1.split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  custom={i}
+                  variants={letterVariants}
+                  initial="hidden"
+                  animate="visible"
+                  className="inline-block"
+                  style={{ whiteSpace: char === " " ? "pre" : "normal" }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </motion.span>
+            <motion.span className="block">
+              {line2.split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  custom={i + line1.length}
+                  variants={letterVariants}
+                  initial="hidden"
+                  animate="visible"
+                  className="inline-block"
+                  style={{ whiteSpace: char === " " ? "pre" : "normal" }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </motion.span>
+            <motion.span className="block text-gradient">
+              {line3.split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  custom={i + line1.length + line2.length}
+                  variants={letterVariants}
+                  initial="hidden"
+                  animate="visible"
+                  className="inline-block"
+                  style={{ whiteSpace: char === " " ? "pre" : "normal" }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </motion.span>
+            <motion.span className="block text-gradient-green">
+              {line4.split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  custom={i + line1.length + line2.length + line3.length}
+                  variants={letterVariants}
+                  initial="hidden"
+                  animate="visible"
+                  className="inline-block"
+                  style={{ whiteSpace: char === " " ? "pre" : "normal" }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </motion.span>
+          </h1>
 
           {/* Subtitle */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 1.8 }}
             className="text-muted-foreground font-body text-lg md:text-xl max-w-2xl mx-auto mb-12"
           >
             Logos, posters, product creatives, and landing pages —
@@ -82,7 +169,7 @@ const Hero = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 2 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <a href="#work" className="btn-primary">
@@ -93,13 +180,13 @@ const Hero = () => {
             </a>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.2 }}
+        transition={{ duration: 1, delay: 2.5 }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2"
       >
         <motion.div
