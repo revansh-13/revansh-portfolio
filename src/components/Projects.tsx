@@ -3,65 +3,59 @@ import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 
+// Import project images
+import spriteImg from "@/assets/projects/sprite.png";
+import brutalismImg from "@/assets/projects/brutalism.png";
+import floatWindowImg from "@/assets/projects/float-window.png";
+import gamedayImg from "@/assets/projects/gameday.png";
+import lumiereImg from "@/assets/projects/lumiere-mockup.png";
+import kiaImg from "@/assets/projects/kia-seltos.png";
+
 const graphicDesignProjects = [
   {
     id: 1,
-    title: "Modern Brand Identity",
-    category: "Logo Design",
-    description: "Minimalist logo system for a tech startup",
-    image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&h=600&fit=crop",
+    title: "Sprite Product Poster",
+    category: "Product Posters",
+    description: "Dynamic product visualization with fresh, energetic aesthetic",
+    image: spriteImg,
   },
   {
     id: 2,
-    title: "Festival Poster Series",
+    title: "Brutalism",
     category: "Posters",
-    description: "Bold typographic posters for music festival",
-    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=600&fit=crop",
+    description: "Bold typographic poster exploring brutalist architecture",
+    image: brutalismImg,
   },
   {
     id: 3,
-    title: "Product Launch Campaign",
-    category: "Product Posters",
-    description: "Visual campaign for premium headphones",
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&h=600&fit=crop",
+    title: "Float",
+    category: "Posters",
+    description: "Surreal visual exploring dreamlike atmospheres",
+    image: floatWindowImg,
   },
   {
     id: 4,
-    title: "Startup Visual Identity",
-    category: "Logo Design",
-    description: "Complete branding for fintech company",
-    image: "https://images.unsplash.com/photo-1634942537034-2531766767d1?w=800&h=600&fit=crop",
+    title: "Gameday Day-2",
+    category: "Posters",
+    description: "Gaming event poster with futuristic cyber aesthetic",
+    image: gamedayImg,
+  },
+  {
+    id: 5,
+    title: "Lumière Skincare",
+    category: "Product Posters",
+    description: "Premium product mockup with elegant lighting",
+    image: lumiereImg,
   },
 ];
 
 const uiuxProjects = [
   {
-    id: 5,
-    title: "SaaS Dashboard",
-    category: "Web Landing Pages",
-    description: "Analytics platform with clean data visualization",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-  },
-  {
     id: 6,
-    title: "E-Commerce Redesign",
-    category: "UI Concepts",
-    description: "Modern shopping experience with 40% conversion boost",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
-  },
-  {
-    id: 7,
-    title: "Fitness App Interface",
-    category: "UI Concepts",
-    description: "Gamified workout tracking with social features",
-    image: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?w=800&h=600&fit=crop",
-  },
-  {
-    id: 8,
-    title: "Agency Landing Page",
+    title: "Kia Seltos 2026",
     category: "Web Landing Pages",
-    description: "High-converting page with immersive animations",
-    image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&h=600&fit=crop",
+    description: "Automotive landing page with immersive visual storytelling",
+    image: kiaImg,
   },
 ];
 
@@ -124,10 +118,39 @@ const Projects = () => {
   const headerInView = useInView(headerRef, { once: true, margin: "-100px" });
   const [activeTab, setActiveTab] = useState<'graphic' | 'uiux'>('graphic');
 
+  // Character animation for header
+  const titleText = "Projects that";
+  const gradientText = "speak for themselves";
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.02,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const letterVariants = {
+    hidden: { opacity: 0, y: 50, rotateX: -90 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      rotateX: 0,
+      transition: {
+        type: "spring" as const,
+        damping: 12,
+        stiffness: 100,
+      },
+    },
+  };
+
   return (
     <section id="work" className="py-32 bg-background relative">
       <div className="container mx-auto px-6 lg:px-12">
-        {/* Section header */}
+        {/* Section header with scroll animation */}
         <motion.div
           ref={headerRef}
           initial={{ opacity: 0, y: 30 }}
@@ -135,13 +158,52 @@ const Projects = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-1.5 bg-secondary text-muted-foreground font-body text-sm rounded-full mb-6">
+          <motion.span 
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={headerInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.5 }}
+            className="inline-block px-4 py-1.5 bg-secondary text-muted-foreground font-body text-sm rounded-full mb-6"
+          >
             Selected Work
-          </span>
+          </motion.span>
+          
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-black tracking-tight">
-            Projects that
+            <motion.span
+              variants={containerVariants}
+              initial="hidden"
+              animate={headerInView ? "visible" : "hidden"}
+              className="inline-block"
+            >
+              {titleText.split("").map((char, index) => (
+                <motion.span
+                  key={index}
+                  variants={letterVariants}
+                  className="inline-block"
+                  style={{ display: char === " " ? "inline" : "inline-block" }}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+            </motion.span>
             <br />
-            <span className="text-gradient">speak for themselves</span>
+            <motion.span
+              variants={containerVariants}
+              initial="hidden"
+              animate={headerInView ? "visible" : "hidden"}
+              className="text-gradient inline-block"
+              style={{ transitionDelay: "0.3s" }}
+            >
+              {gradientText.split("").map((char, index) => (
+                <motion.span
+                  key={index}
+                  variants={letterVariants}
+                  className="inline-block"
+                  style={{ display: char === " " ? "inline" : "inline-block" }}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+            </motion.span>
           </h2>
         </motion.div>
 
