@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
+
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -43,6 +45,7 @@ const Navigation = () => {
               {navLinks.map(link => <a key={link.name} href={link.href} className="font-body text-sm text-muted-foreground hover:text-foreground transition-colors duration-300">
                   {link.name}
                 </a>)}
+              <ThemeToggle />
               <a href="#contact" className="btn-primary text-sm px-6 py-2.5">
                 Let's Collaborate
               </a>
