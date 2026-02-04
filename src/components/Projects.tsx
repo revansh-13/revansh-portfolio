@@ -12,6 +12,7 @@ import lumiereImg from "@/assets/projects/lumiere-mockup.png";
 import kiaImg from "@/assets/projects/kia-seltos.png";
 import legacyWorksImg from "@/assets/projects/legacy-works.png";
 import unfoldImg from "@/assets/projects/unfold.png";
+import redbullImg from "@/assets/projects/redbull.png";
 
 const graphicDesignProjects = [
   {
@@ -72,6 +73,13 @@ const uiuxProjects = [
     category: "Web Landing Pages",
     description: "Elegant photography portfolio with editorial typography",
     image: unfoldImg,
+  },
+  {
+    id: 9,
+    title: "Red Bull E-commerce",
+    category: "Web Landing Pages",
+    description: "Vibrant product showcase with dynamic e-commerce interface",
+    image: redbullImg,
   },
 ];
 
