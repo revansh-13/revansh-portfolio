@@ -10,6 +10,7 @@ import floatWindowImg from "@/assets/projects/float-window.png";
 import gamedayImg from "@/assets/projects/gameday.png";
 import lumiereImg from "@/assets/projects/lumiere-mockup.png";
 import kiaImg from "@/assets/projects/kia-seltos.png";
+import legacyWorksImg from "@/assets/projects/legacy-works.png";
 
 const graphicDesignProjects = [
   {
@@ -46,6 +47,13 @@ const graphicDesignProjects = [
     category: "Product Posters",
     description: "Premium product mockup with elegant lighting",
     image: lumiereImg,
+  },
+  {
+    id: 7,
+    title: "Legacy Works Furniture",
+    category: "Brand Identity",
+    description: "Complete brand identity system with warm, sophisticated aesthetic",
+    image: legacyWorksImg,
   },
 ];
 
