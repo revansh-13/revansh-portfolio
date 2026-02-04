@@ -1,7 +1,13 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, X } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 // Import project images
 import spriteImg from "@/assets/projects/sprite.png";
@@ -66,6 +72,7 @@ const uiuxProjects = [
     category: "Web Landing Pages",
     description: "Automotive landing page with immersive visual storytelling",
     image: kiaImg,
+    figmaEmbed: null,
   },
   {
     id: 8,
@@ -73,6 +80,7 @@ const uiuxProjects = [
     category: "Web Landing Pages",
     description: "Elegant photography portfolio with editorial typography",
     image: unfoldImg,
+    figmaEmbed: "https://embed.figma.com/proto/X2PXJa4t507Tz0ZsOxSP9e/Revansh?page-id=0%3A1&node-id=424-62&viewport=-790%2C1241%2C0.06&scaling=scale-down&content-scaling=fixed&starting-point-node-id=424%3A62&embed-host=share",
   },
   {
     id: 9,
@@ -80,12 +88,36 @@ const uiuxProjects = [
     category: "Web Landing Pages",
     description: "Vibrant product showcase with dynamic e-commerce interface",
     image: redbullImg,
+    figmaEmbed: "https://embed.figma.com/proto/X2PXJa4t507Tz0ZsOxSP9e/Revansh?page-id=7%3A7&node-id=76-2&viewport=-468%2C447%2C0.1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=76%3A2&show-proto-sidebar=1&embed-host=share",
   },
 ];
 
-const ProjectCard = ({ project, index }: { project: typeof graphicDesignProjects[0]; index: number }) => {
+type ProjectType = {
+  id: number;
+  title: string;
+  category: string;
+  description: string;
+  image: string;
+  figmaEmbed?: string | null;
+};
+
+const ProjectCard = ({ 
+  project, 
+  index, 
+  onOpenModal 
+}: { 
+  project: ProjectType; 
+  index: number;
+  onOpenModal?: (project: ProjectType) => void;
+}) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
+
+  const handleClick = () => {
+    if (project.figmaEmbed && onOpenModal) {
+      onOpenModal(project);
+    }
+  };
 
   return (
     <motion.article
@@ -94,6 +126,7 @@ const ProjectCard = ({ project, index }: { project: typeof graphicDesignProjects
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1 }}
       className="group relative cursor-pointer card-hover"
+      onClick={handleClick}
     >
       <div className="relative overflow-hidden rounded-2xl bg-card">
         {/* Image */}
@@ -112,7 +145,7 @@ const ProjectCard = ({ project, index }: { project: typeof graphicDesignProjects
             whileHover={{ y: 0, opacity: 1 }}
             className="flex items-center gap-2 text-primary font-display font-semibold"
           >
-            View Project <ArrowUpRight className="w-5 h-5" />
+            {project.figmaEmbed ? "View Interactive Prototype" : "View Project"} <ArrowUpRight className="w-5 h-5" />
           </motion.div>
         </div>
 
@@ -122,6 +155,15 @@ const ProjectCard = ({ project, index }: { project: typeof graphicDesignProjects
             {project.category}
           </span>
         </div>
+
+        {/* Interactive badge for Figma projects */}
+        {project.figmaEmbed && (
+          <div className="absolute top-4 right-4">
+            <span className="px-3 py-1.5 bg-primary/90 backdrop-blur-sm text-primary-foreground font-body text-xs rounded-full">
+              Interactive
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Info */}
@@ -141,6 +183,15 @@ const Projects = () => {
   const headerRef = useRef(null);
   const headerInView = useInView(headerRef, { once: true, margin: "-100px" });
   const [activeTab, setActiveTab] = useState<'graphic' | 'uiux'>('graphic');
+  const [selectedProject, setSelectedProject] = useState<ProjectType | null>(null);
+
+  const handleOpenModal = (project: ProjectType) => {
+    setSelectedProject(project);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedProject(null);
+  };
 
   // Character animation for header
   const titleText = "Projects that";
@@ -269,10 +320,35 @@ const Projects = () => {
           className="grid md:grid-cols-2 gap-8 lg:gap-12"
         >
           {(activeTab === 'graphic' ? graphicDesignProjects : uiuxProjects).map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
+            <ProjectCard 
+              key={project.id} 
+              project={project} 
+              index={index}
+              onOpenModal={handleOpenModal}
+            />
           ))}
         </motion.div>
       </div>
+
+      {/* Figma Prototype Modal */}
+      <Dialog open={!!selectedProject} onOpenChange={handleCloseModal}>
+        <DialogContent className="max-w-[95vw] w-full max-h-[95vh] h-[90vh] p-0 bg-background border-border">
+          <DialogHeader className="p-4 pb-0">
+            <DialogTitle className="font-display text-xl font-bold flex items-center justify-between">
+              {selectedProject?.title}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="flex-1 p-4 pt-2">
+            {selectedProject?.figmaEmbed && (
+              <iframe
+                src={selectedProject.figmaEmbed}
+                className="w-full h-full rounded-lg border border-border"
+                allowFullScreen
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };
