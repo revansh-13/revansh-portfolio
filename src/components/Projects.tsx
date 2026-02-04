@@ -11,6 +11,7 @@ import gamedayImg from "@/assets/projects/gameday.png";
 import lumiereImg from "@/assets/projects/lumiere-mockup.png";
 import kiaImg from "@/assets/projects/kia-seltos.png";
 import legacyWorksImg from "@/assets/projects/legacy-works.png";
+import unfoldImg from "@/assets/projects/unfold.png";
 
 const graphicDesignProjects = [
   {
@@ -64,6 +65,13 @@ const uiuxProjects = [
     category: "Web Landing Pages",
     description: "Automotive landing page with immersive visual storytelling",
     image: kiaImg,
+  },
+  {
+    id: 8,
+    title: "UNFOLD Photography",
+    category: "Web Landing Pages",
+    description: "Elegant photography portfolio with editorial typography",
+    image: unfoldImg,
   },
 ];
 
