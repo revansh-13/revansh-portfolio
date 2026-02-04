@@ -15,7 +15,7 @@ const tools = [
   { name: "Figma", icon: "🎨" },
   { name: "Adobe Photoshop", icon: "📸" },
   { name: "Adobe Illustrator", icon: "✏️" },
-  { name: "Framer", icon: "⚡" },
+  { name: "Google Antigravity", icon: "🚀" },
   { name: "VS Code", icon: "💻" },
   { name: "Notion", icon: "📝" },
 ];
