@@ -73,6 +73,7 @@ const uiuxProjects = [
     description: "Automotive landing page with immersive visual storytelling",
     image: kiaImg,
     figmaEmbed: null,
+    liveUrl: null,
   },
   {
     id: 8,
@@ -81,6 +82,7 @@ const uiuxProjects = [
     description: "Elegant photography portfolio with editorial typography",
     image: unfoldImg,
     figmaEmbed: "https://embed.figma.com/proto/X2PXJa4t507Tz0ZsOxSP9e/Revansh?page-id=0%3A1&node-id=424-62&viewport=-790%2C1241%2C0.06&scaling=scale-down&content-scaling=fixed&starting-point-node-id=424%3A62&embed-host=share",
+    liveUrl: null,
   },
   {
     id: 9,
@@ -89,14 +91,34 @@ const uiuxProjects = [
     description: "Vibrant product showcase with dynamic e-commerce interface",
     image: redbullImg,
     figmaEmbed: "https://embed.figma.com/proto/X2PXJa4t507Tz0ZsOxSP9e/Revansh?page-id=7%3A7&node-id=76-2&viewport=-468%2C447%2C0.1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=76%3A2&show-proto-sidebar=1&embed-host=share",
+    liveUrl: null,
   },
   {
     id: 10,
     title: "Absolut Vodka Web Design",
     category: "Web Landing Pages",
     description: "Premium spirits brand showcase with bold visual identity",
-    image: redbullImg, // Placeholder - replace with actual image
+    image: redbullImg,
     figmaEmbed: "https://embed.figma.com/proto/X2PXJa4t507Tz0ZsOxSP9e/Revansh?page-id=7%3A7&node-id=519-488&viewport=382%2C-209%2C0.04&scaling=scale-down&content-scaling=fixed&starting-point-node-id=502%3A12&embed-host=share",
+    liveUrl: null,
+  },
+  {
+    id: 11,
+    title: "Shin Matcha",
+    category: "Web Landing Pages",
+    description: "Premium matcha brand with clean, minimalist Japanese aesthetic",
+    image: redbullImg,
+    figmaEmbed: null,
+    liveUrl: "https://shin-matcha.vercel.app/",
+  },
+  {
+    id: 12,
+    title: "Porsche Showcase",
+    category: "Web Landing Pages",
+    description: "Luxury automotive experience with sleek, immersive design",
+    image: kiaImg,
+    figmaEmbed: null,
+    liveUrl: "https://porsche-amber.vercel.app/",
   },
 ];
 
@@ -107,6 +129,7 @@ type ProjectType = {
   description: string;
   image: string;
   figmaEmbed?: string | null;
+  liveUrl?: string | null;
 };
 
 const ProjectCard = ({ 
@@ -122,7 +145,9 @@ const ProjectCard = ({
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   const handleClick = () => {
-    if (project.figmaEmbed && onOpenModal) {
+    if (project.liveUrl) {
+      window.open(project.liveUrl, '_blank', 'noopener,noreferrer');
+    } else if (project.figmaEmbed && onOpenModal) {
       onOpenModal(project);
     }
   };
@@ -153,7 +178,7 @@ const ProjectCard = ({
             whileHover={{ y: 0, opacity: 1 }}
             className="flex items-center gap-2 text-primary font-display font-semibold"
           >
-            {project.figmaEmbed ? "View Interactive Prototype" : "View Project"} <ArrowUpRight className="w-5 h-5" />
+            {project.liveUrl ? "View Live Site" : project.figmaEmbed ? "View Interactive Prototype" : "View Project"} <ArrowUpRight className="w-5 h-5" />
           </motion.div>
         </div>
 
@@ -164,11 +189,15 @@ const ProjectCard = ({
           </span>
         </div>
 
-        {/* Interactive badge for Figma projects */}
-        {project.figmaEmbed && (
+        {/* Badge for interactive projects */}
+        {(project.figmaEmbed || project.liveUrl) && (
           <div className="absolute top-4 right-4">
-            <span className="px-3 py-1.5 bg-primary/90 backdrop-blur-sm text-primary-foreground font-body text-xs rounded-full">
-              Interactive
+            <span className={`px-3 py-1.5 backdrop-blur-sm font-body text-xs rounded-full ${
+              project.liveUrl 
+                ? 'bg-accent-green/90 text-white' 
+                : 'bg-primary/90 text-primary-foreground'
+            }`}>
+              {project.liveUrl ? 'Live' : 'Interactive'}
             </span>
           </div>
         )}
