@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Mail, ArrowUpRight, Send } from "lucide-react";
+import { Mail, ArrowUpRight, Send, Github } from "lucide-react";
 
 const Contact = () => {
   const ref = useRef(null);
@@ -9,9 +9,9 @@ const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
   const socials = [
-    { name: "LinkedIn", url: "#" },
-    { name: "Instagram", url: "#" },
-    { name: "Behance", url: "#" },
+    { name: "LinkedIn", url: "https://www.linkedin.com/in/revansh-singh-209114330" },
+    { name: "GitHub", url: "https://github.com/revansh-13" },
+    { name: "Behance", url: "https://www.behance.net/revanshsingh" },
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -115,13 +115,13 @@ const Contact = () => {
                 Drop me an email
               </p>
               <a
-                href="mailto:hello@yourname.com"
+                href="mailto:revanshsingh69@gmail.com"
                 className="inline-flex items-center gap-3 text-foreground hover:text-primary transition-colors duration-300 group"
               >
                 <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center group-hover:bg-primary/10 transition-colors duration-300">
                   <Mail className="w-5 h-5" />
                 </div>
-                <span className="font-display text-xl font-semibold">hello@yourname.com</span>
+                <span className="font-display text-xl font-semibold">revanshsingh69@gmail.com</span>
               </a>
             </div>
 
