@@ -111,7 +111,7 @@ const uiuxProjects = [
     title: "Shin Matcha",
     category: "Web Landing Pages",
     description: "Premium matcha brand with clean, minimalist Japanese aesthetic",
-    image: redbullImg,
+    image: shinMatchaImg,
     figmaEmbed: null,
     liveUrl: "https://shin-matcha.vercel.app/",
   },
