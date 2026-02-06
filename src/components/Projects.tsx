@@ -22,7 +22,7 @@ import redbullImg from "@/assets/projects/redbull.png";
 import absolutImg from "@/assets/projects/absolut-vodka.png";
 import shinMatchaImg from "@/assets/projects/shin-matcha.png";
 import porscheImg from "@/assets/projects/porsche.png";
-import redbullNewImg from "@/assets/projects/redbull-new.png";
+import lumiereBrandImg from "@/assets/projects/lumiere-brand.png";
 
 const graphicDesignProjects = [
   {
