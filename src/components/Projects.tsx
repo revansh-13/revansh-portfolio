@@ -67,7 +67,6 @@ const graphicDesignProjects = [
     category: "Brand Identity",
     description: "Complete brand identity system with warm, sophisticated aesthetic",
     image: legacyWorksImg,
-    size: "large",
   },
   {
     id: 13,
@@ -75,7 +74,6 @@ const graphicDesignProjects = [
     category: "Brand Identity",
     description: "Complete brand identity with color palette, typography, and product mockups",
     image: lumiereBrandImg,
-    size: "large",
   },
 ];
 
@@ -144,7 +142,6 @@ type ProjectType = {
   image: string;
   figmaEmbed?: string | null;
   liveUrl?: string | null;
-  size?: "large" | string;
 };
 
 const ProjectCard = ({ 
@@ -173,7 +170,7 @@ const ProjectCard = ({
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      className={`group relative cursor-pointer card-hover ${project.size === 'large' ? 'md:col-span-2' : ''}`}
+      className="group relative cursor-pointer card-hover"
       onClick={handleClick}
     >
       <div className="relative overflow-hidden rounded-2xl bg-card">
