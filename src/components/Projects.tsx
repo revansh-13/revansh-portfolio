@@ -120,7 +120,7 @@ const uiuxProjects = [
     title: "Porsche Showcase",
     category: "Web Landing Pages",
     description: "Luxury automotive experience with sleek, immersive design",
-    image: kiaImg,
+    image: porscheImg,
     figmaEmbed: null,
     liveUrl: "https://porsche-amber.vercel.app/",
   },
