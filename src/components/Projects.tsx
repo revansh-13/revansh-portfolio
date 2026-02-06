@@ -93,7 +93,7 @@ const uiuxProjects = [
     title: "Red Bull E-commerce",
     category: "Web Landing Pages",
     description: "Vibrant product showcase with dynamic e-commerce interface",
-    image: redbullImg,
+    image: redbullNewImg,
     figmaEmbed: "https://embed.figma.com/proto/X2PXJa4t507Tz0ZsOxSP9e/Revansh?page-id=7%3A7&node-id=76-2&viewport=-468%2C447%2C0.1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=76%3A2&show-proto-sidebar=1&embed-host=share",
     liveUrl: null,
   },
