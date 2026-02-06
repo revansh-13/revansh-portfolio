@@ -144,6 +144,7 @@ type ProjectType = {
   image: string;
   figmaEmbed?: string | null;
   liveUrl?: string | null;
+  size?: "large" | string;
 };
 
 const ProjectCard = ({ 
