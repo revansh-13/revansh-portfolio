@@ -19,6 +19,10 @@ import kiaImg from "@/assets/projects/kia-seltos.png";
 import legacyWorksImg from "@/assets/projects/legacy-works.png";
 import unfoldImg from "@/assets/projects/unfold.png";
 import redbullImg from "@/assets/projects/redbull.png";
+import absolutImg from "@/assets/projects/absolut-vodka.png";
+import shinMatchaImg from "@/assets/projects/shin-matcha.png";
+import porscheImg from "@/assets/projects/porsche.png";
+import redbullNewImg from "@/assets/projects/redbull-new.png";
 
 const graphicDesignProjects = [
   {
