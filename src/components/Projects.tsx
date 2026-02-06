@@ -173,7 +173,7 @@ const ProjectCard = ({
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="group relative cursor-pointer card-hover"
+      className={`group relative cursor-pointer card-hover ${project.size === 'large' ? 'md:col-span-2' : ''}`}
       onClick={handleClick}
     >
       <div className="relative overflow-hidden rounded-2xl bg-card">
