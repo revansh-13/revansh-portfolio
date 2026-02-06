@@ -19,6 +19,10 @@ import kiaImg from "@/assets/projects/kia-seltos.png";
 import legacyWorksImg from "@/assets/projects/legacy-works.png";
 import unfoldImg from "@/assets/projects/unfold.png";
 import redbullImg from "@/assets/projects/redbull.png";
+import absolutImg from "@/assets/projects/absolut-vodka.png";
+import shinMatchaImg from "@/assets/projects/shin-matcha.png";
+import porscheImg from "@/assets/projects/porsche.png";
+import redbullNewImg from "@/assets/projects/redbull-new.png";
 
 const graphicDesignProjects = [
   {
@@ -89,7 +93,7 @@ const uiuxProjects = [
     title: "Red Bull E-commerce",
     category: "Web Landing Pages",
     description: "Vibrant product showcase with dynamic e-commerce interface",
-    image: redbullImg,
+    image: redbullNewImg,
     figmaEmbed: "https://embed.figma.com/proto/X2PXJa4t507Tz0ZsOxSP9e/Revansh?page-id=7%3A7&node-id=76-2&viewport=-468%2C447%2C0.1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=76%3A2&show-proto-sidebar=1&embed-host=share",
     liveUrl: null,
   },
@@ -98,7 +102,7 @@ const uiuxProjects = [
     title: "Absolut Vodka Web Design",
     category: "Web Landing Pages",
     description: "Premium spirits brand showcase with bold visual identity",
-    image: redbullImg,
+    image: absolutImg,
     figmaEmbed: "https://embed.figma.com/proto/X2PXJa4t507Tz0ZsOxSP9e/Revansh?page-id=7%3A7&node-id=519-488&viewport=382%2C-209%2C0.04&scaling=scale-down&content-scaling=fixed&starting-point-node-id=502%3A12&embed-host=share",
     liveUrl: null,
   },
@@ -107,7 +111,7 @@ const uiuxProjects = [
     title: "Shin Matcha",
     category: "Web Landing Pages",
     description: "Premium matcha brand with clean, minimalist Japanese aesthetic",
-    image: redbullImg,
+    image: shinMatchaImg,
     figmaEmbed: null,
     liveUrl: "https://shin-matcha.vercel.app/",
   },
@@ -116,7 +120,7 @@ const uiuxProjects = [
     title: "Porsche Showcase",
     category: "Web Landing Pages",
     description: "Luxury automotive experience with sleek, immersive design",
-    image: kiaImg,
+    image: porscheImg,
     figmaEmbed: null,
     liveUrl: "https://porsche-amber.vercel.app/",
   },
