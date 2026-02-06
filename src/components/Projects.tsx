@@ -102,7 +102,7 @@ const uiuxProjects = [
     title: "Absolut Vodka Web Design",
     category: "Web Landing Pages",
     description: "Premium spirits brand showcase with bold visual identity",
-    image: redbullImg,
+    image: absolutImg,
     figmaEmbed: "https://embed.figma.com/proto/X2PXJa4t507Tz0ZsOxSP9e/Revansh?page-id=7%3A7&node-id=519-488&viewport=382%2C-209%2C0.04&scaling=scale-down&content-scaling=fixed&starting-point-node-id=502%3A12&embed-host=share",
     liveUrl: null,
   },
