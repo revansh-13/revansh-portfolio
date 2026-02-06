@@ -23,6 +23,7 @@ import absolutImg from "@/assets/projects/absolut-vodka.png";
 import shinMatchaImg from "@/assets/projects/shin-matcha.png";
 import porscheImg from "@/assets/projects/porsche.png";
 import redbullNewImg from "@/assets/projects/redbull-new.png";
+import lumiereBrandImg from "@/assets/projects/lumiere-brand.png";
 
 const graphicDesignProjects = [
   {
@@ -66,6 +67,13 @@ const graphicDesignProjects = [
     category: "Brand Identity",
     description: "Complete brand identity system with warm, sophisticated aesthetic",
     image: legacyWorksImg,
+  },
+  {
+    id: 13,
+    title: "Lumière Skincare Brand Identity",
+    category: "Brand Identity",
+    description: "Complete brand identity with color palette, typography, and product mockups",
+    image: lumiereBrandImg,
   },
 ];
 
