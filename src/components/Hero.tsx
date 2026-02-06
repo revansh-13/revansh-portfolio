@@ -1,163 +1,183 @@
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
-import { ArrowDown } from "lucide-react";
-import { useRef, useEffect } from "react";
-import heroImg from "@/assets/hero-humanoid.png";
-import HeroParticles from "./HeroParticles";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowDown, Sparkles } from "lucide-react";
+import { useRef } from "react";
 
 const Hero = () => {
   const containerRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end start"],
+    offset: ["start start", "end start"]
   });
-
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
 
-  // Parallax mouse effect for the humanoid image
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const imgX = useSpring(mouseX, { stiffness: 50, damping: 20 });
-  const imgY = useSpring(mouseY, { stiffness: 50, damping: 20 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const cx = window.innerWidth / 2;
-      const cy = window.innerHeight / 2;
-      mouseX.set((e.clientX - cx) / 40);
-      mouseY.set((e.clientY - cy) / 40);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
-
-  const textVariants = {
-    hidden: { opacity: 0, y: 40 },
+  // Character animation variants
+  const letterVariants = {
+    hidden: { opacity: 0, y: 50 },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: i * 0.15, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] as const },
-    }),
+      transition: {
+        delay: i * 0.03,
+        duration: 0.5,
+        ease: [0.25, 0.46, 0.45, 0.94] as const
+      }
+    })
   };
 
+  const line1 = "Designing visuals &";
+  const line2 = "interfaces that feel";
+  const line3 = "clear, modern";
+  const line4 = "& human.";
+
   return (
-    <section
+    <section 
       ref={containerRef}
-      className="relative min-h-screen flex items-center overflow-hidden"
-      style={{ background: "linear-gradient(160deg, hsl(0 0% 0%) 0%, hsl(220 30% 6%) 50%, hsl(210 40% 4%) 100%)" }}
+      className="relative min-h-screen flex items-center justify-center bg-gradient-hero overflow-hidden noise-overlay"
     >
-      {/* Animated gradient orbs */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {/* Background decorative elements with parallax */}
+      <motion.div 
+        style={{ y }}
+        className="absolute inset-0 overflow-hidden pointer-events-none"
+      >
+        {/* Electric blue glow */}
         <motion.div
-          animate={{ scale: [1, 1.2, 1], opacity: [0.12, 0.2, 0.12] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] rounded-full bg-primary blur-[200px]"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 0.15, scale: 1 }}
+          transition={{ duration: 2 }}
+          className="absolute top-1/4 right-1/4 w-[600px] h-[600px] rounded-full bg-primary blur-[150px]"
         />
+        {/* Acid green glow */}
         <motion.div
-          animate={{ scale: [1, 1.15, 1], opacity: [0.06, 0.12, 0.06] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-0 left-1/4 w-[500px] h-[500px] rounded-full bg-accent-purple blur-[180px]"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 0.1, scale: 1 }}
+          transition={{ duration: 2, delay: 0.3 }}
+          className="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-accent-green blur-[120px]"
         />
-      </div>
+        {/* Purple accent */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.08 }}
+          transition={{ duration: 2, delay: 0.6 }}
+          className="absolute top-1/3 left-1/3 w-[300px] h-[300px] rounded-full bg-accent-purple blur-[100px]"
+        />
+      </motion.div>
 
-      {/* Particles */}
-      <HeroParticles />
+      {/* Grid pattern overlay */}
+      <div className="absolute inset-0 opacity-[0.02]" style={{
+        backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px),
+                          linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)`,
+        backgroundSize: '60px 60px'
+      }} />
 
-      {/* Grid overlay */}
-      <div
-        className="absolute inset-0 opacity-[0.015] pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px),
-                            linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)`,
-          backgroundSize: "80px 80px",
-        }}
-      />
-
-      <motion.div style={{ opacity }} className="container mx-auto px-6 lg:px-16 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8">
-          {/* Left — Text */}
-          <div className="flex-1 max-w-2xl text-center lg:text-left">
-            <motion.div
-              custom={0}
-              variants={textVariants}
-              initial="hidden"
-              animate="visible"
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border/50 bg-secondary/30 backdrop-blur-sm mb-8"
-            >
-              <span className="w-2 h-2 rounded-full bg-accent-green animate-pulse" />
-              <span className="text-muted-foreground font-body text-xs tracking-widest uppercase">
-                Available for work
-              </span>
-            </motion.div>
-
-            <motion.h1
-              custom={1}
-              variants={textVariants}
-              initial="hidden"
-              animate="visible"
-              className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-[0.95] tracking-tight mb-6"
-            >
-              <span className="block text-foreground">Designing</span>
-              <span className="block text-foreground">visuals that</span>
-              <span className="block text-gradient">feel human.</span>
-            </motion.h1>
-
-            <motion.p
-              custom={2}
-              variants={textVariants}
-              initial="hidden"
-              animate="visible"
-              className="text-muted-foreground font-body text-base md:text-lg max-w-lg mx-auto lg:mx-0 mb-10 leading-relaxed"
-            >
-              Crafting logos, interfaces, and digital experiences — where clarity
-              meets creativity and every pixel has purpose.
-            </motion.p>
-
-            <motion.div
-              custom={3}
-              variants={textVariants}
-              initial="hidden"
-              animate="visible"
-              className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start"
-            >
-              <a
-                href="#work"
-                className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-display font-semibold text-sm tracking-wide rounded-full overflow-hidden transition-all duration-300 hover:-translate-y-0.5"
-              >
-                <span className="relative z-10">View Work</span>
-                <span className="absolute inset-0 bg-gradient-to-r from-primary to-accent-purple opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <span className="absolute inset-0 shadow-glow opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </a>
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-border/60 text-foreground font-display font-semibold text-sm tracking-wide rounded-full transition-all duration-300 hover:border-primary/60 hover:text-primary hover:-translate-y-0.5 hover:shadow-[0_0_30px_-8px_hsl(210_100%_55%/0.25)]"
-              >
-                Let's Collaborate
-              </a>
-            </motion.div>
-          </div>
-
-          {/* Right — Humanoid image */}
+      <motion.div 
+        style={{ opacity, scale }}
+        className="container mx-auto px-6 lg:px-12 relative z-10"
+      >
+        <div className="max-w-5xl mx-auto text-center">
+          {/* Tagline */}
           <motion.div
-            custom={2}
-            variants={textVariants}
-            initial="hidden"
-            animate="visible"
-            className="flex-1 flex justify-center lg:justify-end relative"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-secondary/50 backdrop-blur-sm rounded-full border border-border mb-8"
           >
-            {/* Glow behind image */}
-            <motion.div
-              animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] rounded-full bg-primary/20 blur-[100px]"
-            />
+            <Sparkles className="w-4 h-4 text-accent-green" />
+            <span className="text-muted-foreground font-body text-sm tracking-wide">
+              Graphic Design × UI/UX
+            </span>
+          </motion.div>
+          
+          {/* Main headline with character animation */}
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-black leading-[0.95] mb-8 tracking-tight overflow-hidden">
+            <motion.span className="block">
+              {line1.split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  custom={i}
+                  variants={letterVariants}
+                  initial="hidden"
+                  animate="visible"
+                  className="inline-block"
+                  style={{ whiteSpace: char === " " ? "pre" : "normal" }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </motion.span>
+            <motion.span className="block">
+              {line2.split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  custom={i + line1.length}
+                  variants={letterVariants}
+                  initial="hidden"
+                  animate="visible"
+                  className="inline-block"
+                  style={{ whiteSpace: char === " " ? "pre" : "normal" }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </motion.span>
+            <motion.span className="block text-gradient">
+              {line3.split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  custom={i + line1.length + line2.length}
+                  variants={letterVariants}
+                  initial="hidden"
+                  animate="visible"
+                  className="inline-block"
+                  style={{ whiteSpace: char === " " ? "pre" : "normal" }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </motion.span>
+            <motion.span className="block text-gradient-green">
+              {line4.split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  custom={i + line1.length + line2.length + line3.length}
+                  variants={letterVariants}
+                  initial="hidden"
+                  animate="visible"
+                  className="inline-block"
+                  style={{ whiteSpace: char === " " ? "pre" : "normal" }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </motion.span>
+          </h1>
 
-            <motion.img
-              src={heroImg}
-              alt="Futuristic humanoid representing design innovation"
-              style={{ x: imgX, y: imgY }}
-              className="relative z-10 w-[320px] md:w-[420px] lg:w-[500px] xl:w-[560px] h-auto drop-shadow-[0_0_60px_hsl(210_100%_55%/0.3)]"
-            />
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.8 }}
+            className="text-muted-foreground font-body text-lg md:text-xl max-w-2xl mx-auto mb-12"
+          >
+            Logos, posters, product creatives, and landing pages —
+            crafted with intention and a whole lot of pixels.
+          </motion.p>
+
+          {/* CTA buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 2 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <a href="#work" className="btn-primary">
+              View Work
+            </a>
+            <a href="#contact" className="btn-secondary">
+              Let's Collaborate
+            </a>
           </motion.div>
         </div>
       </motion.div>
@@ -166,8 +186,8 @@ const Hero = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
+        transition={{ duration: 1, delay: 2.5 }}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2"
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}
