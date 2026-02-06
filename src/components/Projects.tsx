@@ -67,6 +67,13 @@ const graphicDesignProjects = [
     description: "Complete brand identity system with warm, sophisticated aesthetic",
     image: legacyWorksImg,
   },
+  {
+    id: 13,
+    title: "Lumière Skincare Brand Identity",
+    category: "Brand Identity",
+    description: "Complete brand identity with color palette, typography, and product mockups",
+    image: lumiereBrandImg,
+  },
 ];
 
 const uiuxProjects = [
