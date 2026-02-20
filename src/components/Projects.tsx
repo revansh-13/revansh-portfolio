@@ -164,66 +164,89 @@ const ProjectCard = ({
     }
   };
 
+  const isInteractive = !!(project.liveUrl || project.figmaEmbed);
+
   return (
     <motion.article
       ref={ref}
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 60 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="group relative cursor-pointer card-hover"
+      transition={{ duration: 0.5, delay: index * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className={`group relative ${isInteractive ? 'cursor-pointer' : ''}`}
       onClick={handleClick}
     >
-      <div className="relative overflow-hidden rounded-2xl bg-card">
-        {/* Image */}
-        <div className="overflow-hidden">
+      {/* Card shell — sharp corners, editorial border */}
+      <div className="relative overflow-hidden bg-card border border-border transition-all duration-300 group-hover:border-primary/40"
+        style={{
+          boxShadow: '0 0 0 0 transparent',
+        }}
+      >
+        {/* Offset shadow on hover via pseudo via inline motion */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none z-0"
+          initial={false}
+          whileHover={{ opacity: 1 }}
+        />
+
+        {/* Image container */}
+        <div className="relative overflow-hidden">
           <img
             src={project.image}
             alt={project.title}
-            className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-[1.03]"
           />
-        </div>
 
-        {/* Overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end p-6">
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            whileHover={{ y: 0, opacity: 1 }}
-            className="flex items-center gap-2 text-primary font-display font-semibold"
-          >
-            {project.liveUrl ? "View Live Site" : project.figmaEmbed ? "View Interactive Prototype" : "View Project"} <ArrowUpRight className="w-5 h-5" />
-          </motion.div>
-        </div>
-
-        {/* Category badge */}
-        <div className="absolute top-4 left-4">
-          <span className="px-3 py-1.5 bg-background/80 backdrop-blur-sm text-foreground font-body text-xs rounded-full border border-border">
-            {project.category}
-          </span>
-        </div>
-
-        {/* Badge for interactive projects */}
-        {(project.figmaEmbed || project.liveUrl) && (
-          <div className="absolute top-4 right-4">
-            <span className={`px-3 py-1.5 backdrop-blur-sm font-body text-xs rounded-full ${
-              project.liveUrl 
-                ? 'bg-accent-green/90 text-white' 
-                : 'bg-primary/90 text-primary-foreground'
-            }`}>
-              {project.liveUrl ? 'Live' : 'Interactive'}
-            </span>
+          {/* Full overlay with slide-up reveal */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/50 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out flex items-end p-6">
+            <div className="flex items-center justify-between w-full">
+              <span className="font-display font-bold text-sm tracking-widest uppercase text-foreground">
+                {project.liveUrl ? "View Live" : project.figmaEmbed ? "View Prototype" : "View Project"}
+              </span>
+              <div className="w-10 h-10 border border-primary flex items-center justify-center text-primary transition-all duration-200 group-hover:bg-primary group-hover:text-primary-foreground"
+                style={{ clipPath: 'polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))' }}
+              >
+                <ArrowUpRight className="w-4 h-4" />
+              </div>
+            </div>
           </div>
-        )}
+        </div>
+
+        {/* Bottom info strip — inside card */}
+        <div className="px-5 py-4 border-t border-border flex items-center justify-between gap-4">
+          <div className="min-w-0">
+            <h3 className="font-display text-base font-black tracking-tight truncate group-hover:text-primary transition-colors duration-300">
+              {project.title}
+            </h3>
+            <p className="text-muted-foreground font-body text-xs mt-0.5 truncate">
+              {project.description}
+            </p>
+          </div>
+
+          {/* Category + status pills */}
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="px-2.5 py-1 border border-border text-muted-foreground font-body text-xs tracking-wide uppercase whitespace-nowrap">
+              {project.category}
+            </span>
+            {project.liveUrl && (
+              <span className="px-2.5 py-1 font-body text-xs tracking-wide uppercase whitespace-nowrap"
+                style={{ background: 'hsl(var(--accent-green))', color: 'hsl(var(--accent-green-foreground))' }}
+              >
+                Live
+              </span>
+            )}
+            {project.figmaEmbed && !project.liveUrl && (
+              <span className="px-2.5 py-1 bg-primary text-primary-foreground font-body text-xs tracking-wide uppercase whitespace-nowrap">
+                Proto
+              </span>
+            )}
+          </div>
+        </div>
       </div>
 
-      {/* Info */}
-      <div className="mt-5">
-        <h3 className="font-display text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">
-          {project.title}
-        </h3>
-        <p className="text-muted-foreground font-body text-sm">
-          {project.description}
-        </p>
-      </div>
+      {/* Offset shadow — editorial brutalist effect */}
+      <div
+        className="absolute inset-0 -z-10 border border-primary/20 translate-x-0 translate-y-0 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-300 ease-out pointer-events-none"
+      />
     </motion.article>
   );
 };
@@ -336,24 +359,25 @@ const Projects = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={headerInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex justify-center gap-4 mb-16"
+          className="flex justify-center gap-0 mb-16 border border-border w-fit mx-auto"
         >
           <button
             onClick={() => setActiveTab('graphic')}
-            className={`px-6 py-3 font-display font-semibold text-sm rounded-full transition-all duration-300 ${
+            className={`px-8 py-3 font-display font-black text-xs tracking-widest uppercase transition-all duration-300 relative ${
               activeTab === 'graphic'
-                ? 'bg-primary text-primary-foreground shadow-glow'
-                : 'bg-secondary text-secondary-foreground hover:bg-muted'
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-transparent text-muted-foreground hover:text-foreground'
             }`}
           >
             Graphic Design
           </button>
+          <div className="w-px bg-border" />
           <button
             onClick={() => setActiveTab('uiux')}
-            className={`px-6 py-3 font-display font-semibold text-sm rounded-full transition-all duration-300 ${
+            className={`px-8 py-3 font-display font-black text-xs tracking-widest uppercase transition-all duration-300 ${
               activeTab === 'uiux'
-                ? 'bg-primary text-primary-foreground shadow-glow'
-                : 'bg-secondary text-secondary-foreground hover:bg-muted'
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-transparent text-muted-foreground hover:text-foreground'
             }`}
           >
             UI/UX & Web
