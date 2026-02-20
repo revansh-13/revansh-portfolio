@@ -251,23 +251,67 @@
 }
 
 @layer components {
-  /* Gen-Z button styles */
+  /* Intentional button styles — editorial, not generic */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-display font-semibold text-sm tracking-wide rounded-full transition-all duration-300 hover:shadow-glow hover:-translate-y-0.5;
+    @apply relative inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-primary text-primary-foreground font-display font-bold text-sm tracking-wider uppercase transition-all duration-200;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+
+  .btn-primary::after {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-200;
+    background: rgba(255,255,255,0.1);
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+
+  .btn-primary:hover::after {
+    @apply opacity-100;
+  }
+
+  .btn-primary:hover {
+    box-shadow: 4px 4px 0px hsl(var(--primary) / 0.4);
+    transform: translate(-2px, -2px);
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 px-8 py-4 border border-border text-foreground font-display font-semibold text-sm tracking-wide rounded-full transition-all duration-300 hover:border-primary hover:text-primary hover:-translate-y-0.5;
+    @apply relative inline-flex items-center justify-center gap-2 px-7 py-3.5 text-foreground font-display font-bold text-sm tracking-wider uppercase transition-all duration-200 overflow-hidden;
+    border: 1.5px solid hsl(var(--border));
+  }
+
+  .btn-secondary::before {
+    content: '';
+    @apply absolute inset-0 -translate-x-full transition-transform duration-300 ease-out;
+    background: hsl(var(--primary));
+    z-index: 0;
+  }
+
+  .btn-secondary:hover::before {
+    @apply translate-x-0;
+  }
+
+  .btn-secondary:hover {
+    color: hsl(var(--primary-foreground));
+    border-color: hsl(var(--primary));
+  }
+
+  .btn-secondary > * {
+    @apply relative z-10;
+  }
+
+  .btn-secondary span, .btn-secondary {
+    @apply relative z-10;
   }
 
   .btn-accent {
-    @apply inline-flex items-center justify-center gap-2 px-8 py-4 font-display font-semibold text-sm tracking-wide rounded-full transition-all duration-300 hover:-translate-y-0.5;
+    @apply relative inline-flex items-center justify-center gap-2 px-7 py-3.5 font-display font-bold text-sm tracking-wider uppercase transition-all duration-200;
     background: hsl(var(--accent-green));
     color: hsl(var(--accent-green-foreground));
+    border: 1.5px solid hsl(var(--accent-green));
   }
 
   .btn-accent:hover {
-    box-shadow: var(--shadow-glow-green);
+    box-shadow: 4px 4px 0px hsl(var(--accent-green) / 0.4);
+    transform: translate(-2px, -2px);
   }
 
   /* Skill tag styles */
