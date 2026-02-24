@@ -24,6 +24,7 @@ import shinMatchaImg from "@/assets/projects/shin-matcha.png";
 import porscheImg from "@/assets/projects/porsche.png";
 import redbullNewImg from "@/assets/projects/redbull-new.png";
 import lumiereBrandImg from "@/assets/projects/lumiere-brand.png";
+import infiniteSlideImg from "@/assets/projects/infinite-slide.png";
 
 const graphicDesignProjects = [
   {
@@ -131,6 +132,15 @@ const uiuxProjects = [
     image: porscheImg,
     figmaEmbed: null,
     liveUrl: "https://porsche-amber.vercel.app/",
+  },
+  {
+    id: 14,
+    title: "Infinite Slide",
+    category: "Web Landing Pages",
+    description: "Infinite endless slide animation with seamless looping carousel transitions",
+    image: infiniteSlideImg,
+    figmaEmbed: "https://embed.figma.com/proto/X2PXJa4t507Tz0ZsOxSP9e/Revansh?node-id=610-87&viewport=-15521%2C2339%2C0.33&scaling=scale-down&content-scaling=fixed&starting-point-node-id=610%3A87&show-proto-sidebar=1&page-id=0%3A1&embed-host=share",
+    liveUrl: null,
   },
 ];
 
